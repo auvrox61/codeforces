@@ -1,36 +1,48 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int main(){
-    string a,b,c;
-    cin>>a>>b>>c;
-    vector<char>container1;
-    vector<char>container2;
-    for(char ck:a){
-        container1.push_back(ck);
+void checkValidity(string a,string b,string c){
+    int aLen=a.size();
+    int bLen=b.size();
+    int cLen=c.size();
+    if(cLen!=aLen+bLen){
+        cout<<"NO"<<endl;
+        return;
     }
-    for(char ch:b){
-        container1.push_back(ch);
+    vector<int>freqA(26,0);
+    vector<int>freqB(26,0);
+    vector<int>freqC(26,0);
+    for(int i=0;i<aLen;i++){
+        char cha=a[i];
+        freqA[cha-'A']++;
     }
-    for(char cha:c){
-        container2.push_back(cha);
+    for(int i=0;i<bLen;i++){
+        char cha=b[i];
+        freqB[cha-'A']++;
     }
-    if(container1.size()!=container2.size()){
-        cout<<"No"<<endl;
+    for(int i=0;i<cLen;i++){
+        char cha=c[i];
+        freqC[cha-'A']++;
+    }
+    bool allFreqPassed=true;
+    for(int i=0;i<26;i++){
+        if(freqC[i]!=freqA[i]+freqB[i]){
+            allFreqPassed=false;
+            break;
+        }
+    }
+    if(allFreqPassed){
+        cout<<"YES"<<endl;
     } else{
-        map<char,int>freq1;
-        map<char,int>freq2;
-        for(char cm:container1){
-            freq1[cm]++;
-        }
-        for(char cg:container2){
-            freq2[cg]++;
-        }
-        if(freq1==freq2){
-            cout<<"Yes"<<endl;
-        } else{
-            cout<<"No"<<endl;
-        }
+        cout<<"NO"<<endl;
     }
+}
+
+int main(){
+    string guestName;
+    string hostName;
+    string piledName;
+    cin>>guestName>>hostName>>piledName;
+    checkValidity(guestName,hostName,piledName);
     return 0;
 }
